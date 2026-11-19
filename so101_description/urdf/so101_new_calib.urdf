@@ -343,7 +343,9 @@ https://cad.onshape.com/documents/7715cc284bb430fe6dab4ffd/w/4fd0791b683777b02f8
     <parent link="gripper_link" />
     <child link="moving_jaw_so101_v1_link" />
     <axis xyz="0 0 1" />
-    <limit effort="10" velocity="10" lower="-0.174533" upper="1.74533" />
+    <!-- -0.0905 is the actual lower limit, but the original urdf lower limit was -0.174533.
+    Modifying to -0.05 to give room. -->
+    <limit effort="10" velocity="10" lower="-0.05" upper="1.74533" />
   </joint>
 
   <transmission name="gripper_trans">
@@ -399,12 +401,15 @@ https://cad.onshape.com/documents/7715cc284bb430fe6dab4ffd/w/4fd0791b683777b02f8
 
   <!-- Joint from upper_arm to lower_arm -->
   <!-- Note: 5-degree calibration offset applied to joint limits -->
+
   <joint name="elbow_flex" type="revolute">
     <origin xyz="-0.11257 -0.028 1.73763e-16" rpy="-3.63608e-16 8.74301e-16 1.5708" />
     <parent link="upper_arm_link" />
     <child link="lower_arm_link" />
     <axis xyz="0 0 1" />
-    <limit effort="10" velocity="10" lower="-1.69" upper="1.69" />
+    <!-- 1.577 is the actual upper limit, but the original urdf upper limit was 1.69. Modifying to
+    1.5 to give room. -->
+    <limit effort="10" velocity="10" lower="-1.69" upper="1.50" />
   </joint>
 
   <transmission name="elbow_flex_trans">

@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'mirror = so101_tools.mirror:main',
         ],
     },
 )
