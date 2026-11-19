@@ -102,8 +102,8 @@ class Mirror(Node):
             scs_present_position_rad = ((scs_present_position - CENTER_TICK) / TICKS_PER_REV) * (2 * math.pi)
             scs_present_speed_rad_s = (SCS_TOHOST(scs_present_speed, 15) / 4096) * (2 * math.pi)
 
-            self.get_logger().info("Position [ID:%03d] PresPosTicks:%03d PresPosRad:%03d" % (sid, scs_present_position, scs_present_position_rad))
-            self.get_logger().info("Velocity [ID:%03d] PresSpeedTicks:%03f PresSpeedRad:%05f" % (sid, SCS_TOHOST(scs_present_speed, 15), scs_present_speed_rad_s))
+            self.get_logger().info("Position [ID:%03d] PresPosTicks:%03d PresPosRad:%05f" % (sid, scs_present_position, scs_present_position_rad))
+            self.get_logger().info("Velocity [ID:%03d] PresSpeedTicks:%03d PresSpeedRad:%05f" % (sid, SCS_TOHOST(scs_present_speed, 15), scs_present_speed_rad_s))
 
             msg.header.stamp = self.get_clock().now().to_msg()
             msg.position[sid - 1] = scs_present_position_rad

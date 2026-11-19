@@ -23,3 +23,9 @@ Today I learned a bit about hardware. I learned that my servos are connected to 
 HIWORD and LOWORD are the top and bottom halves of a word which is a string of bits, ie: LOWORD of a 4 byte word gives us the bottom half of data. This is useful when data you need is stored sequentially in the memory.
 
 Baudrate tells us how how fast bits are sent over the serial wire. In this case it is defined as bits per second.
+
+11/18/26
+
+I learned how to use the sdk example code to read the servos raw positions. I then adapted the code to work inside the mirror node. The JointState msg uses radians and rad / s for its values. I converted each raw tick value by googling the conversion. Initially I created my own names for the name field in JointState but realized that that was wrong and looked at the urdf for each proper joint name. I also learned about signs being important for the direction of the joints movement but in this case every sign is just +1.
+
+I also learned about homing offsets and how the arms calibration is done to figure out each joints 0 (middle position) and min / max range of motion values. I looked at the calibration json file to check my joints actual limits and compared them to the urdf. All of the urdf limits except the elbow were slightly smaller than the actual range which is okay. However the elbow's urdf limit went beyond the actual so i tightened it. This explains the issue from 11/3/26 where the slider allowed the rviz model to collide into itself.
