@@ -463,4 +463,6 @@ https://cad.onshape.com/documents/7715cc284bb430fe6dab4ffd/w/4fd0791b683777b02f8
     </actuator>
   </transmission>
 
+  <xacro:include filename="so101_ros2_control.xacro" />
+
 </robot>
