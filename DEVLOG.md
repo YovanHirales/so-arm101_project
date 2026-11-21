@@ -29,3 +29,19 @@ Baudrate tells us how how fast bits are sent over the serial wire. In this case 
 I learned how to use the sdk example code to read the servos raw positions. I then adapted the code to work inside the mirror node. The JointState msg uses radians and rad / s for its values. I converted each raw tick value by googling the conversion. Initially I created my own names for the name field in JointState but realized that that was wrong and looked at the urdf for each proper joint name. I also learned about signs being important for the direction of the joints movement but in this case every sign is just +1.
 
 I also learned about homing offsets and how the arms calibration is done to figure out each joints 0 (middle position) and min / max range of motion values. I looked at the calibration json file to check my joints actual limits and compared them to the urdf. All of the urdf limits except the elbow were slightly smaller than the actual range which is okay. However the elbow's urdf limit went beyond the actual so i tightened it. This explains the issue from 11/3/26 where the slider allowed the rviz model to collide into itself.
+
+11/20/26
+
+RECAP
+We start with our physical robot, a description of our robot (urdf), and a way to display the robot in rviz using that description. The URDF describes the robot's links, joints, and joint limits. The first step was displaying the robot in rviz and using the ros2 joint state gui and robot state publisher to move the robot in rviz using the gui (display.launch.py).
+
+Next was reading the robot's state from the physical robot and mirroring it in rviz rather than reading joint positions from the joint state gui (fake joint positions). This invloved using the feetch servo sdk to read each joint state and converting the raw ticks (position) to something the robot state publisher can understand, radians. To convert to radians we had to understand how the robot was originally calibrated using lerobot's calibration script. This script had me position each joint manually to a center position and found what each servo's homing offset is and wrote it to the respective servo's EEPROM. The homing offset is used to set the middle position of each joint to 2047 (ticks). We then compared the robot's actual joint limits to the URDF's joint limits to ensure a planner using the urdf wont command past the real hardstops to avoid damaging the servos.
+
+Current
+The next step is to create a way for a controller to talk to a hardware driver to actually move the virtual robot. To do this we use ros2_control. This ros2 framework acts as a controller manager or a bridge between our controller and our driver. The controller tells the robot how it should move, and the driver talks to the actual servos to reach our desired position.
+
+Problems
+
+1. I ran into an issue with the ros2_control block. I defined it in a separate file but forgot to import into the main .xacro file. I fixed this by simply adding <xacro:include file=''> tag at the bottom of the main .urdf.xacro file.
+
+2.

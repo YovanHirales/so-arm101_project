@@ -20,7 +20,7 @@ def generate_launch_description():
 
     model_arg = DeclareLaunchArgument(
         'model',
-        default_value=PathJoinSubstitution([pkg_share, 'urdf', 'so101_new_calib.urdf']),
+        default_value=PathJoinSubstitution([pkg_share, 'urdf', 'so101_model.urdf.xacro']),
         description='Absolute path to the robot URDF or xacro file',
     )
     rviz_config_arg = DeclareLaunchArgument(
@@ -30,8 +30,6 @@ def generate_launch_description():
     )
 
     # Run xacro on the file and use its output (the URDF text) as the parameter value.
-    # xacro passes a plain URDF through unchanged, so this keeps working after you
-    # convert to .urdf.xacro in step 3: only the 'model' default changes.
     # ParameterValue(..., value_type=str) stops ROS from trying to parse the XML as YAML.
     robot_description = ParameterValue(
         Command(['xacro ', LaunchConfiguration('model')]),
@@ -49,14 +47,12 @@ def generate_launch_description():
     )
 
     # A slider window for each movable joint. It publishes /joint_states.
-    # In step 2 your mirror node replaces this with real servo readings.
     joint_state_publisher_gui = Node(
         package='joint_state_publisher_gui',
         executable='joint_state_publisher_gui',
     )
 
-    # RViz, loading your saved config (-d). If the file doesn't exist yet, RViz logs
-    # an error and opens with a default layout. Set it up, then File > Save Config As.
+    # RViz, loading your saved config (-d)
     rviz = Node(
         package='rviz2',
         executable='rviz2',

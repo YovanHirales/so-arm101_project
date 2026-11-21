@@ -2,7 +2,7 @@
 <!-- Generated using onshape-to-robot -->
 <!-- Onshape
 https://cad.onshape.com/documents/7715cc284bb430fe6dab4ffd/w/4fd0791b683777b02f8d975a/e/826c553ede3b7592eb9ca800 -->
-<robot name="so101_new_calib">
+<robot name="so101_new_calib" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Materials -->
   <material name="3d_printed">
@@ -462,5 +462,9 @@ https://cad.onshape.com/documents/7715cc284bb430fe6dab4ffd/w/4fd0791b683777b02f8
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+
+  <xacro:arg name="mode" default="mock" />
+  <xacro:property name="mode" value="$(arg mode)" />
+  <xacro:include filename="$(find so101_description)/urdf/so101.ros2_control.xacro" />
 
 </robot>
