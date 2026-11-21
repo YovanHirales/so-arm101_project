@@ -5,8 +5,9 @@
             <xacro:if value="${mode == 'mock'}">
                 <plugin>mock_components/GenericSystem</plugin>
             </xacro:if>
-
-            <param name='calculate_dynamics'>true</param>
+            <!-- <xacro:if value="${mode == 'real'}">
+                <plugin> </plugin>
+            </xacro:if> -->
         </hardware>
         <joint name="shoulder_pan">
             <command_interface name='position' />
