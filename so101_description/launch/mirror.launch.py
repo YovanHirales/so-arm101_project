@@ -19,7 +19,7 @@ def generate_launch_description():
 
     model_arg = DeclareLaunchArgument(
         'model',
-        default_value=PathJoinSubstitution([pkg_share, 'urdf', 'so101_new_calib.urdf']),
+        default_value=PathJoinSubstitution([pkg_share, 'urdf', 'so101_model.urdf.xacro']),
         description='Absolute path to the robot URDF or xacro file',
     )
     rviz_config_arg = DeclareLaunchArgument(
